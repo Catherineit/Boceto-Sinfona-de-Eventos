@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Boseto - Especificación del Sistema de Reservas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/styles.css" />
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Boseto</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav"
+                aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="nav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#requerimientos">Requerimientos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#arquitectura">Arquitectura</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#diseño">Diseño UI</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#modelo-bd">Modelo BD</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#seguridad">Seguridad</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#implementacion">Implementación</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#pruebas">Plan de Pruebas</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero bg-light py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="display-6">Sistema de Reservas - Especificación Técnica</h1>
+                    <p class="lead">Resumen completo: requerimientos, arquitectura 4+1, diseño UX/UI, modelo de datos,
+                        seguridad, implementación y plan de pruebas.</p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <a class="btn btn-primary" href="#requerimientos">Ver Requerimientos</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        <section id="requerimientos" class="mb-5">
+            <h2>1. Requerimientos</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Requerimientos Funcionales</h4>
+                    <ul>
+                        <li>Registro e inicio de sesión</li>
+                        <li>Roles: admin y usuario</li>
+                        <li>CRUD de eventos</li>
+                        <li>Reservas con control de cupos</li>
+                        <li>Reportes de ocupación</li>
+                        <li>Gestión de asistencia</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h4>Requerimientos No Funcionales</h4>
+                    <ul>
+                        <li>Seguridad (hash, cifrado, validación)</li>
+                        <li>Rendimiento (respuesta &lt; 2s)</li>
+                        <li>Escalabilidad</li>
+                        <li>Disponibilidad web 24/7</li>
+                        <li>UI responsiva</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="arquitectura" class="mb-5">
+            <h2>2. Arquitectura 4+1</h2>
+            <h5>Vista Lógica (Clases)</h5>
+            <ul>
+                <li>Usuario</li>
+                <li>Evento</li>
+                <li>Reserva (Relaciones 1:N)</li>
+            </ul>
+
+            <h5>Vista de Desarrollo (Componentes)</h5>
+            <ul>
+                <li>Frontend (React)</li>
+                <li>Backend (API REST – Node.js / Express)</li>
+                <li>Servicios: Auth, Eventos, Reservas, Reportes</li>
+                <li>Base de datos: MySQL</li>
+            </ul>
+
+            <h5>Vista de Procesos (BPMN)</h5>
+            <ul>
+                <li>Proceso de Reserva</li>
+                <li>Proceso de Crear Evento (admin)</li>
+                <li>Caso de Uso Cero: "Usuario se autentica, visualiza un evento y realiza una reserva."</li>
+            </ul>
+        </section>
+
+        <section id="diseño" class="mb-5">
+            <h2>3. Diseño de Interfaces (UX/UI)</h2>
+            <h5>Perfiles de Usuario</h5>
+            <ul>
+                <li>Administrador</li>
+                <li>Usuario final</li>
+                <li>Operador</li>
+            </ul>
+
+            <h5>Jerarquía de Información</h5>
+            <ul>
+                <li>Inicio</li>
+                <li>Eventos</li>
+                <li>Mis Reservas</li>
+                <li>Panel administrador</li>
+                <li>Reportes</li>
+            </ul>
+
+            <h5>Mapa del Sitio</h5>
+            <ul>
+                <li>Home</li>
+                <li>Eventos (listado → detalle → reserva)</li>
+                <li>Login / Registro</li>
+                <li>Panel Admin</li>
+                <li>Reportes</li>
+            </ul>
+
+            <h5>Prototipo UX/UI (Descripción)</h5>
+            <ul>
+                <li>Home visual con carrusel</li>
+                <li>Listado de eventos tipo tarjetas</li>
+                <li>Pantalla de reserva con capacidad visible</li>
+                <li>Panel admin con KPIs y menú lateral</li>
+            </ul>
+        </section>
+
+        <section id="modelo-bd" class="mb-5">
+            <h2>4. Modelo de Base de Datos</h2>
+            <h5>Entidades</h5>
+            <h6>Usuario</h6>
+            <pre><code>id_usuario (PK), nombre, correo, contraseña_hash, rol, fecha_registro</code></pre>
+            <h6>Evento</h6>
+            <pre><code>id_evento (PK), titulo, fecha, capacidad, aforo_actual, estado</code></pre>
+            <h6>Reserva</h6>
+            <pre><code>id_reserva (PK), id_usuario (FK), id_evento (FK), fecha_reserva, estado</code></pre>
+        </section>
+
+        <section id="seguridad" class="mb-5">
+            <h2>5. Estándares de Programación Segura</h2>
+            <ul>
+                <li>Validación estricta de entradas</li>
+                <li>Hash de contraseñas (BCrypt / Argon2)</li>
+                <li>JWT con expiración corta</li>
+                <li>Autorización basada en roles</li>
+                <li>Manejo seguro de errores</li>
+                <li>Cifrado HTTPS</li>
+                <li>Prevención OWASP: XSS, CSRF, SQL Injection</li>
+            </ul>
+        </section>
+
+        <section id="implementacion" class="mb-5">
+            <h2>6. Implementación</h2>
+            <h5>Frontend</h5>
+            <p>React + Bootstrap. Módulos: Login, Listado de Eventos, Detalle, Reserva, Panel Admin.</p>
+
+            <h5>Backend</h5>
+            <p>Node.js + Express. Servicios: Auth, Eventos, Reservas, Reportes.</p>
+
+            <h5>Base de Datos</h5>
+            <p>MySQL implementado mediante migraciones.</p>
+
+            <h5>Despliegue</h5>
+            <p>Simulación en entorno local / Docker.</p>
+        </section>
+
+        <section id="pruebas" class="mb-5">
+            <h2>7. Plan de Pruebas</h2>
+            <h5>Pruebas Funcionales</h5>
+            <ul>
+                <li>Registro → Correcto</li>
+                <li>Login → Correcto</li>
+                <li>Crear evento → Guarda</li>
+                <li>Reservar evento → Disminuye cupo</li>
+            </ul>
+
+            <h5>Pruebas de Integración</h5>
+            <ul>
+                <li>Flujo completo autenticación → reserva</li>
+            </ul>
+
+            <h5>Pruebas de Seguridad</h5>
+            <ul>
+                <li>SQL Injection → bloqueado</li>
+                <li>XSS → bloqueado</li>
+                <li>Intentos fallidos → bloqueo temporal</li>
+            </ul>
+
+            <h5>Pruebas de Rendimiento</h5>
+            <ul>
+                <li>Respuesta &lt; 2 segundos en consultas</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="bg-dark text-light py-4">
+        <div class="container text-center">
+            <small>&copy; 2025 Boseto — Especificación técnica. Generado automáticamente.</small>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

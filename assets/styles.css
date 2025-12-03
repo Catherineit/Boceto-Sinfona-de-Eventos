@@ -1,0 +1,10 @@
+:root{
+  --primary:#0d6efd;
+}
+body{font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
+.hero{background: linear-gradient(180deg, rgba(13,110,253,0.06), rgba(255,255,255,0));}
+pre{background:#f8f9fa;padding:12px;border-radius:6px;overflow:auto}
+h2{border-left:4px solid var(--primary);padding-left:10px}
+@media (max-width:576px){
+  .hero .display-6{font-size:1.4rem}
+}
