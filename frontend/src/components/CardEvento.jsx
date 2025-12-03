@@ -35,12 +35,12 @@ export default function CardEvento({ evento }){
       </div>
       <div className="card-body d-flex flex-column">
         <h5 className="card-title">{localEvento.titulo}</h5>
-        <p className="card-text">{localEvento.descripcion ? localEvento.descripcion.slice(0,120) : ''}</p>
-        <p className="mt-auto mb-1 small">{new Date(localEvento.fecha).toLocaleString()}</p>
+        <p className="card-text text-muted small">{localEvento.descripcion ? localEvento.descripcion.slice(0,80) : ''}</p>
+        <p className="mt-auto mb-1 small text-muted">{new Date(localEvento.fecha).toLocaleDateString()} · {localEvento.ubicacion || ''}</p>
         <div className="d-flex justify-content-between align-items-center">
           <span className={`badge ${badgeClass}`}>{disponibles === 0 ? 'Agotado' : `${disponibles} disponibles`}</span>
           <div>
-            <Link to={`/eventos/${localEvento.id_evento}`} className="btn btn-outline-primary btn-sm me-2">Ver</Link>
+            <Link to={`/eventos/${localEvento.id_evento}`} className="btn btn-link btn-sm me-2">Ver más</Link>
             <button className="btn btn-primary btn-sm" disabled={disponibles===0} onClick={()=>setShowReserva(true)}>Reservar</button>
           </div>
         </div>

@@ -13,11 +13,11 @@ export default function CarouselHome({ slides = [] }){
       <div className="carousel-inner">
         {slides.map((s,i)=> (
           <div key={i} className={`carousel-item ${i===0 ? 'active' : ''}`}>
-            <img src={s.imagen || '/assets/hero.jpg'} className="d-block w-100" alt={s.titulo} style={{height:360,objectFit:'cover'}} />
-            <div className="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-3">
-              <h5>{s.titulo}</h5>
-              {s.subtitulo && <p>{s.subtitulo}</p>}
-              {s.ctaText && <a href={s.ctaLink || '#'} className="btn btn-primary">{s.ctaText}</a>}
+            <img src={s.imagen || '/assets/hero.jpg'} className="d-block w-100" alt={s.titulo} style={{height:420,objectFit:'cover'}} />
+            <div className="carousel-caption d-none d-md-block bg-dark bg-opacity-40 rounded p-3" style={{left: '6%', right:'auto', textAlign:'left'}}>
+              <h5 className="display-4" style={{color:'white'}}>{s.titulo}</h5>
+              {s.subtitulo && <p style={{color:'rgba(255,255,255,0.9)'}}>{s.subtitulo}</p>}
+              {s.ctaText && <a href={s.ctaLink || '#'} className="btn btn-primary btn-lg mt-2">{s.ctaText}</a>}
             </div>
           </div>
         ))}

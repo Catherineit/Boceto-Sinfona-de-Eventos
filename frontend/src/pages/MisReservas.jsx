@@ -5,6 +5,8 @@ export default function MisReservas(){
   const [reservas, setReservas] = useState([])
   const [loading, setLoading] = useState(true)
   const [cancelling, setCancelling] = useState(null)
+  const [showModal, setShowModal] = useState(false)
+  const [selected, setSelected] = useState(null)
 
   useEffect(() => {
     (async () => {
@@ -22,14 +24,23 @@ export default function MisReservas(){
   }, [])
 
   async function handleCancel(id) {
-    const ok = window.confirm('¿Deseas cancelar esta reserva?')
-    if (!ok) return
+    // Abrir modal de confirmación para la reserva seleccionada
+    setSelected(reservas.find(r => r.id_reserva === id) || null)
+    setShowModal(true)
+  }
+
+  // función que ejecuta la cancelación cuando el usuario confirma en el modal
+  async function confirmCancel() {
+    if (!selected) return
+    const id = selected.id_reserva
     setCancelling(id)
     try {
       await api.delete(`/reservas/${id}`)
       setReservas(prev => prev.filter(r => r.id_reserva !== id))
       const { showToast } = await import('../utils/toast')
       showToast('Reserva cancelada', 'success')
+      setShowModal(false)
+      setSelected(null)
     } catch (err) {
       console.error(err)
       const { showToast } = await import('../utils/toast')
@@ -65,6 +76,32 @@ export default function MisReservas(){
           </li>
         ))}
       </ul>
+
+      {/* Modal de confirmación controlado por React/Bootstrap */}
+      {showModal && selected && (
+        <div className="modal d-block" tabIndex="-1" role="dialog" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Confirmar cancelación</h5>
+                <button type="button" className="btn-close" aria-label="Close" onClick={() => { setShowModal(false); setSelected(null) }}></button>
+              </div>
+              <div className="modal-body">
+                <p>¿Deseas cancelar la reserva para <strong>{selected.titulo}</strong>?</p>
+                <p className="text-muted small">Evento: {new Date(selected.fecha_evento).toLocaleString()}</p>
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" onClick={() => { setShowModal(false); setSelected(null) }} disabled={cancelling === selected.id_reserva}>Cancelar</button>
+                <button type="button" className="btn btn-danger" onClick={confirmCancel} disabled={cancelling === selected.id_reserva}>
+                  {cancelling === selected.id_reserva ? (
+                    <><span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Cancelando...</>
+                  ) : 'Confirmar'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
