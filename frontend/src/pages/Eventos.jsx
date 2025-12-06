@@ -46,12 +46,13 @@ export default function Eventos(){
           <div className="mt-4" style={{display:'flex',justifyContent:'center'}}>
             <div style={{maxWidth:820, width:'100%'}}>
               <div className="search-card">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16" style={{color:'var(--primary)'}}>
-                  <path d="M11 6a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"/>
-                  <path d="M12.9 11.3a6.5 6.5 0 1 0-1.6 1.6l3.85 3.85 1.6-1.6-3.85-3.85z"/>
-                </svg>
                 <input type="search" className="search-input" placeholder="Buscar eventos" value={query} onChange={e=>setQuery(e.target.value)} />
-                <button className="search-button" onClick={()=>{}} aria-label="Buscar">Buscar</button>
+                <span className="search-icon" aria-hidden>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M11 6a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"/>
+                    <path d="M12.9 11.3a6.5 6.5 0 1 0-1.6 1.6l3.85 3.85 1.6-1.6-3.85-3.85z"/>
+                  </svg>
+                </span>
               </div>
             </div>
           </div>
@@ -99,72 +100,4 @@ export default function Eventos(){
     </div>
   )
 }
-import React, { useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
-import api from '../api'
-import CardEvento from '../components/CardEvento'
 
-export default function Eventos(){
-  const [eventos, setEventos] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [query, setQuery] = useState('')
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await api.get('/eventos')
-        setEventos(res.data.eventos || [])
-      } catch (err) {
-        console.error(err)
-      } finally {
-        setLoading(false)
-      }
-    })()
-  }, [])
-
-  const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase()
-    if (!q) return eventos
-    return eventos.filter(e => (e.titulo || '').toLowerCase().includes(q) || (e.descripcion || '').toLowerCase().includes(q) || (e.ubicacion || '').toLowerCase().includes(q))
-  }, [eventos, query])
-
-  return (
-    <div>
-      <div className="events-mockup">
-        <div className="events-hero text-center">
-          <h1 className="display-4 fw-bold">Eventos</h1>
-          <div className="page-subtitle">Explora actividades, talleres y experiencias — reserva tu lugar al instante.</div>
-
-          <div className="mt-4" style={{display:'flex',justifyContent:'center'}}>
-            <div style={{maxWidth:820, width:'100%'}}>
-              <div className="search-card">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16" style={{color:'var(--primary)'}}>
-                  <path d="M11 6a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"/>
-                  <path d="M12.9 11.3a6.5 6.5 0 1 0-1.6 1.6l3.85 3.85 1.6-1.6-3.85-3.85z"/>
-                </svg>
-                <input type="search" className="search-input" placeholder="Buscar eventos" value={query} onChange={e=>setQuery(e.target.value)} />
-                <button className="search-button" onClick={()=>{}} aria-label="Buscar">Buscar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="container">
-        <h4 className="mb-4">Nuestros eventos</h4>
-        {loading ? <div>Cargando eventos...</div> : (
-          <div className="row events-grid">
-            {filtered.length === 0 && <div className="text-muted">No se encontraron eventos.</div>}
-            {filtered.map(ev => (
-              <div key={ev.id_evento} className="col-sm-6 col-md-4 mb-4 d-flex">
-                <div className="w-100 event-card d-flex">
-                  <CardEvento evento={ev} />
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  )
-}

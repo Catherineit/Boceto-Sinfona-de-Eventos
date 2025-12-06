@@ -20,10 +20,15 @@ export default function NavBar(){
           <img src="/assets/logo.png" alt="Logo" style={{height:32,marginRight:8}} />
           <span>Boceto</span>
         </Link>
-        <div className="collapse navbar-collapse">
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="mainNavbar">
           <ul className="navbar-nav me-auto">
             <li className="nav-item"><Link className="nav-link" to="/">Inicio</Link></li>
             <li className="nav-item"><Link className="nav-link" to="/eventos">Eventos</Link></li>
+            <li className="nav-item"><Link className="nav-link" to="/servicios">Servicios</Link></li>
+            <li className="nav-item"><Link className="nav-link" to="/contacto">Contacto</Link></li>
             {token && <li className="nav-item"><Link className="nav-link" to="/mis-reservas">Mis Reservas</Link></li>}
             {isAdmin && <li className="nav-item"><Link className="nav-link" to="/admin">Panel Administrador</Link></li>}
           </ul>
