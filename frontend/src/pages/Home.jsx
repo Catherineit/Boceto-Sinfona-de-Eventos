@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import CarouselHome from '../components/CarouselHome'
 import CardEvento from '../components/CardEvento'
 import api from '../api'
+import fallbackEvents from '../data/events'
 
 export default function Home(){
   const [events, setEvents] = useState([])
@@ -12,9 +13,13 @@ export default function Home(){
     (async () => {
       try {
         const res = await api.get('/eventos')
-        setEvents(res.data.eventos || [])
+        const serverEvents = (res && res.data && Array.isArray(res.data.eventos) && res.data.eventos.length > 0)
+          ? res.data.eventos
+          : fallbackEvents
+        setEvents(serverEvents)
       } catch (err) {
         console.error(err)
+        setEvents(fallbackEvents)
       } finally {
         setLoading(false)
       }
@@ -26,7 +31,8 @@ export default function Home(){
     { titulo: 'Reserva tu lugar al instante', subtitulo: 'Sistema de reservas en tiempo real', ctaText: 'Mis Reservas', ctaLink: '/mis-reservas', imagen: '/assets/hero2.jpg' }
   ]
 
-  const featured = events.slice(0,4)
+  // Los eventos destacados deben coincidir con los eventos definidos en `data/events.js`
+  const featured = fallbackEvents.slice(0,4)
 
   return (
     <div>
