@@ -94,3 +94,16 @@ footer .container{ max-width:1100px }
 @media (max-width:576px){
   .contact-card .card-body{ padding:14px }
 }
+
+/* Footer styles */
+.site-footer{ border-top:1px solid rgba(16,24,40,0.04); background:linear-gradient(180deg,#ffffff,#f7fbff); }
+.site-footer a{ color:var(--primary); text-decoration:none }
+.site-footer a:hover{ text-decoration:underline }
+.site-footer .footer-brand{ color:rgba(16,24,40,0.7) }
+.site-footer .footer-contact a{ display:inline-block }
+.site-footer .footer-contact, .site-footer .footer-hours{ font-size:0.95rem }
+@media (max-width:576px){
+  .site-footer .container{ gap:8px; text-align:center }
+  .site-footer .footer-contact, .site-footer .footer-hours{ margin-top:6px }
+}
+

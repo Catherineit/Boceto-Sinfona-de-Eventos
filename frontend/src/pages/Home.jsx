@@ -99,13 +99,6 @@ export default function Home(){
           </div>
         </div>
       </div>
-
-      <footer className="bg-light py-4 mt-5">
-        <div className="container text-center small text-muted">
-          <div>Contacto: contacto@boceto.local</div>
-          <div className="mt-2">© {new Date().getFullYear()} Boceto - Todos los derechos reservados</div>
-        </div>
-      </footer>
     </div>
   )
 }

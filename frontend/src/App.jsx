@@ -1,6 +1,7 @@
 import React from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import NavBar from './components/NavBar'
+import Footer from './components/Footer'
 import Login from './pages/Login'
 import Home from './pages/Home'
 import Eventos from './pages/Eventos'
@@ -27,6 +28,7 @@ function App() {
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
+      <Footer />
     </div>
   )
 }
