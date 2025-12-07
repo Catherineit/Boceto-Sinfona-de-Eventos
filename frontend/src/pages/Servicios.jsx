@@ -22,19 +22,23 @@ export default function Servicios(){
     <div>
       <div className="events-mockup">
         <div className="events-hero text-center">
-          <h1 className="display-4 fw-bold">Servicios</h1>
-          <div className="page-subtitle">Elige los servicios complementarios para tu evento</div>
+          <div className="mb-3" style={{display:'inline-flex',alignItems:'center',gap:12,background:'rgba(30,111,191,0.1)',padding:'8px 20px',borderRadius:999}}>
+            <i className="fas fa-concierge-bell" style={{color:'var(--primary)',fontSize:'1.2rem'}}></i>
+            <span style={{color:'var(--primary)',fontWeight:'600',fontSize:'0.95rem'}}>SERVICIOS PREMIUM</span>
+          </div>
+          <h1 className="display-4 fw-bold mb-3">Servicios Adicionales</h1>
+          <div className="page-subtitle mb-4"><i className="fas fa-star me-2" style={{color:'var(--primary)'}}></i>Elige los servicios complementarios para hacer tu evento inolvidable</div>
 
           <div className="mt-4" style={{display:'flex',justifyContent:'center'}}>
             <div style={{maxWidth:820, width:'100%'}}>
-              <div className="search-card">
-                <input type="search" className="search-input" placeholder="Buscar servicios" value={query} onChange={e=>setQuery(e.target.value)} />
-                <span className="search-icon" aria-hidden>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M11 6a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"/>
-                    <path d="M12.9 11.3a6.5 6.5 0 1 0-1.6 1.6l3.85 3.85 1.6-1.6-3.85-3.85z"/>
-                  </svg>
-                </span>
+              <div className="search-card" style={{position:'relative',boxShadow:'0 8px 32px rgba(30,111,191,0.15)'}}>
+                <i className="fas fa-search" style={{position:'absolute',left:24,top:'50%',transform:'translateY(-50%)',color:'var(--primary)',fontSize:'1.1rem',zIndex:2}}></i>
+                <input type="search" className="search-input" placeholder="Buscar servicios..." value={query} onChange={e=>setQuery(e.target.value)} style={{paddingLeft:56}} />
+                {query && (
+                  <button onClick={()=>setQuery('')} style={{position:'absolute',right:20,top:'50%',transform:'translateY(-50%)',background:'none',border:'none',color:'#999',cursor:'pointer',fontSize:'1.2rem'}}>
+                    <i className="fas fa-times-circle"></i>
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -42,24 +46,36 @@ export default function Servicios(){
       </div>
 
       <div className="container mt-5">
-        <h4 className="mb-4">Servicios disponibles</h4>
+        <div className="mb-4">
+          <h4 className="fw-bold mb-1"><i className="fas fa-list-check me-2" style={{color:'var(--primary)'}}></i>Servicios disponibles</h4>
+          <p className="text-muted mb-0 small">{filtered.length} servicio{filtered.length !== 1 ? 's' : ''} encontrado{filtered.length !== 1 ? 's' : ''}</p>
+        </div>
         <div className="row services-grid">
           {filtered.map(s => (
-            <div key={s.id} className="col-sm-6 col-md-4 mb-4 d-flex">
-              <div className="card service-card w-100 text-center">
-                <div style={{paddingTop:0,overflow:'hidden',height:180,borderTopLeftRadius:12,borderTopRightRadius:12}}>
+            <div key={s.id} className="col-sm-6 col-lg-4 mb-4 d-flex">
+              <div className="card service-card w-100" style={{border:'none',borderRadius:16,overflow:'hidden',boxShadow:'0 4px 20px rgba(16,24,40,0.08)',transition:'all 0.3s ease'}}>
+                <div style={{paddingTop:0,overflow:'hidden',height:200,position:'relative'}}>
                   {s.icon ? (
-                    <img src={s.icon} alt={s.title} style={{width:'100%',height:'100%',objectFit:'cover'}} />
+                    <img src={s.icon} alt={s.title} style={{width:'100%',height:'100%',objectFit:'cover',transition:'transform 0.3s ease'}} onMouseOver={e=>e.target.style.transform='scale(1.05)'} onMouseOut={e=>e.target.style.transform='scale(1)'} />
                   ) : (
-                    <div style={{width:'100%',height:'100%',background:'#eef6ff',borderRadius:12,margin:'0 auto'}} />
+                    <div style={{width:'100%',height:'100%',background:'linear-gradient(135deg, #eef6ff, #d4e8ff)',display:'flex',alignItems:'center',justifyContent:'center'}}>
+                      <i className="fas fa-image" style={{fontSize:'3rem',color:'#ccc'}}></i>
+                    </div>
                   )}
+                  <div style={{position:'absolute',top:12,right:12,background:'rgba(255,255,255,0.95)',padding:'6px 12px',borderRadius:999,boxShadow:'0 4px 12px rgba(0,0,0,0.15)'}}>
+                    <i className="fas fa-star" style={{color:'#ffc107',fontSize:'0.85rem',marginRight:4}}></i>
+                    <span style={{fontSize:'0.75rem',fontWeight:'600',color:'#333'}}>Premium</span>
+                  </div>
                 </div>
-                <div className="card-body d-flex flex-column align-items-center">
-                  <h5 className="card-title mt-2">{s.title}</h5>
-                  <p className="card-text small text-muted" style={{minHeight:40}}>{s.desc}</p>
-                  <div className="mb-3" style={{color:'var(--muted)'}}>{s.price}</div>
-                  <div className="mt-auto">
-                    <button className="btn btn-primary">Agregar</button>
+                <div className="card-body d-flex flex-column align-items-center text-center" style={{padding:24}}>
+                  <h5 className="card-title mt-2 mb-3" style={{fontWeight:'700',fontSize:'1.15rem',color:'#1a1a1a'}}>{s.title}</h5>
+                  <p className="card-text small text-muted mb-3" style={{lineHeight:1.6,minHeight:45}}>{s.desc}</p>
+                  <div className="mb-3 d-flex align-items-center justify-content-center gap-2" style={{background:'rgba(30,111,191,0.1)',padding:'10px 20px',borderRadius:999,width:'fit-content'}}>
+                    <i className="fas fa-tag" style={{color:'var(--primary)',fontSize:'0.9rem'}}></i>
+                    <span style={{color:'var(--primary)',fontWeight:'700',fontSize:'1.05rem'}}>{s.price}</span>
+                  </div>
+                  <div className="mt-auto w-100">
+                    <button className="btn btn-primary w-100" style={{borderRadius:999,padding:'12px 0',fontWeight:'600',boxShadow:'0 4px 12px rgba(30,111,191,0.3)',transition:'all 0.3s ease'}}><i className="fas fa-plus-circle me-2"></i>Agregar al evento</button>
                   </div>
                 </div>
               </div>

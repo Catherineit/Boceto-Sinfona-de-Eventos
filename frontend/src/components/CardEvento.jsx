@@ -29,24 +29,40 @@ export default function CardEvento({ evento }){
   }
 
   return (
-    <div className="card h-100">
-      <div style={{height:160,overflow:'hidden'}}>
-        <img src={localEvento.imagenUrl || '/assets/placeholder.png'} alt={localEvento.titulo} className="card-img-top" style={{objectFit:'cover',width:'100%',height:'100%'}} />
-      </div>
-      <div className="card-body d-flex flex-column">
-        <h5 className="card-title">{localEvento.titulo}</h5>
-        <div className="event-meta mb-2" style={{fontSize:'0.9rem',color:'var(--muted)'}}>{new Date(localEvento.fecha).toLocaleDateString(undefined, { day:'numeric', month:'long', year:'numeric' })}</div>
-        <div className="event-meta" style={{display:'flex',alignItems:'center',gap:8,fontSize:'0.9rem',color:'var(--muted)'}}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16" style={{color:'var(--muted)'}}>
-            <path d="M8 0a5 5 0 0 0-5 5c0 3.75 5 11 5 11s5-7.25 5-11a5 5 0 0 0-5-5zm0 7.5A2.5 2.5 0 1 1 8 2.5a2.5 2.5 0 0 1 0 5z"/>
-          </svg>
-          <span>{localEvento.ubicacion}</span>
+    <div className="card h-100" style={{border:'none',borderRadius:16,overflow:'hidden',boxShadow:'0 4px 20px rgba(16,24,40,0.08)',transition:'all 0.3s ease'}}>
+      <div style={{height:180,overflow:'hidden',position:'relative'}}>
+        <img src={localEvento.imagenUrl || '/assets/placeholder.png'} alt={localEvento.titulo} className="card-img-top" style={{objectFit:'cover',width:'100%',height:'100%',transition:'transform 0.3s ease'}} onMouseOver={e=>e.target.style.transform='scale(1.05)'} onMouseOut={e=>e.target.style.transform='scale(1)'} />
+        <div style={{position:'absolute',top:12,right:12,background:badgeClass.replace('bg-',''),padding:'6px 12px',borderRadius:999,display:'flex',alignItems:'center',gap:6,boxShadow:'0 4px 12px rgba(0,0,0,0.15)'}}>
+          <i className={`fas ${disponibles===0?'fa-times-circle':porcentaje<=30?'fa-exclamation-circle':'fa-check-circle'}`} style={{color:'white',fontSize:'0.85rem'}}></i>
+          <span style={{color:'white',fontSize:'0.75rem',fontWeight:'600'}}>{disponibles} cupos</span>
         </div>
-        <p className="card-text text-muted small mt-3">{localEvento.descripcion ? localEvento.descripcion.slice(0,100) : ''}</p>
-        <div className="mt-auto mb-3 event-meta" style={{fontSize:'0.9rem',color:'var(--muted)'}}>Capacidad: {localEvento.capacidad} personas</div>
-        <div className="event-footer d-flex justify-content-start gap-2">
-          <Link to={`/eventos/${localEvento.id_evento}`} className="btn btn-primary btn-sm" style={{borderRadius:'999px',padding:'0.45rem 0.9rem'}}>Ver más</Link>
-          <button className="btn btn-primary btn-sm" disabled={disponibles===0} onClick={()=>setShowReserva(true)} style={{borderRadius:'999px',padding:'0.45rem 0.9rem'}}>Reservar</button>
+      </div>
+      <div className="card-body d-flex flex-column" style={{padding:20}}>
+        <h5 className="card-title mb-3" style={{fontWeight:'700',fontSize:'1.15rem',color:'#1a1a1a'}}>{localEvento.titulo}</h5>
+        <div className="d-flex flex-column gap-2 mb-3">
+          <div style={{display:'flex',alignItems:'center',gap:10}}>
+            <div style={{width:32,height:32,background:'rgba(30,111,191,0.1)',borderRadius:8,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
+              <i className="fas fa-calendar-alt" style={{color:'var(--primary)',fontSize:'0.9rem'}}></i>
+            </div>
+            <span style={{fontSize:'0.9rem',color:'#555'}}>{new Date(localEvento.fecha).toLocaleDateString(undefined, { day:'numeric', month:'long', year:'numeric' })}</span>
+          </div>
+          <div style={{display:'flex',alignItems:'center',gap:10}}>
+            <div style={{width:32,height:32,background:'rgba(30,111,191,0.1)',borderRadius:8,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
+              <i className="fas fa-map-marker-alt" style={{color:'var(--primary)',fontSize:'0.9rem'}}></i>
+            </div>
+            <span style={{fontSize:'0.9rem',color:'#555'}}>{localEvento.ubicacion}</span>
+          </div>
+          <div style={{display:'flex',alignItems:'center',gap:10}}>
+            <div style={{width:32,height:32,background:'rgba(30,111,191,0.1)',borderRadius:8,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
+              <i className="fas fa-users" style={{color:'var(--primary)',fontSize:'0.9rem'}}></i>
+            </div>
+            <span style={{fontSize:'0.9rem',color:'#555'}}>Capacidad: {localEvento.capacidad} personas</span>
+          </div>
+        </div>
+        <p className="card-text text-muted small" style={{lineHeight:1.6}}>{localEvento.descripcion ? localEvento.descripcion.slice(0,100)+'...' : ''}</p>
+        <div className="mt-auto d-flex gap-2 pt-3" style={{borderTop:'1px solid #f0f0f0'}}>
+          <Link to={`/eventos/${localEvento.id_evento}`} className="btn btn-outline-primary btn-sm flex-fill" style={{borderRadius:999,padding:'10px 0',fontWeight:'600',border:'2px solid var(--primary)'}}><i className="fas fa-info-circle me-1"></i>Ver más</Link>
+          <button className="btn btn-primary btn-sm flex-fill" disabled={disponibles===0} onClick={()=>setShowReserva(true)} style={{borderRadius:999,padding:'10px 0',fontWeight:'600',boxShadow:'0 4px 12px rgba(30,111,191,0.3)'}}><i className="fas fa-ticket-alt me-1"></i>Reservar</button>
         </div>
       </div>
       <ModalReserva evento={localEvento} show={showReserva} onClose={()=>setShowReserva(false)} onConfirm={handleConfirm} />

@@ -21,19 +21,23 @@ export default function Eventos(){
     <div>
       <div className="events-mockup">
         <div className="events-hero text-center">
-          <h1 className="display-4 fw-bold">Eventos</h1>
-          <div className="page-subtitle">Explora actividades, talleres y experiencias — reserva tu lugar al instante.</div>
+          <div className="mb-3" style={{display:'inline-flex',alignItems:'center',gap:12,background:'rgba(30,111,191,0.1)',padding:'8px 20px',borderRadius:999}}>
+            <i className="fas fa-sparkles" style={{color:'var(--primary)',fontSize:'1.2rem'}}></i>
+            <span style={{color:'var(--primary)',fontWeight:'600',fontSize:'0.95rem'}}>DESCUBRE EXPERIENCIAS ÚNICAS</span>
+          </div>
+          <h1 className="display-4 fw-bold mb-3">Eventos Especiales</h1>
+          <div className="page-subtitle mb-4"><i className="fas fa-calendar-check me-2" style={{color:'var(--primary)'}}></i>Explora actividades, talleres y experiencias — reserva tu lugar al instante.</div>
 
           <div className="mt-4" style={{display:'flex',justifyContent:'center'}}>
             <div style={{maxWidth:820, width:'100%'}}>
-              <div className="search-card">
-                <input type="search" className="search-input" placeholder="Buscar eventos" value={query} onChange={e=>setQuery(e.target.value)} />
-                <span className="search-icon" aria-hidden>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M11 6a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"/>
-                    <path d="M12.9 11.3a6.5 6.5 0 1 0-1.6 1.6l3.85 3.85 1.6-1.6-3.85-3.85z"/>
-                  </svg>
-                </span>
+              <div className="search-card" style={{position:'relative',boxShadow:'0 8px 32px rgba(30,111,191,0.15)'}}>
+                <i className="fas fa-search" style={{position:'absolute',left:24,top:'50%',transform:'translateY(-50%)',color:'var(--primary)',fontSize:'1.1rem',zIndex:2}}></i>
+                <input type="search" className="search-input" placeholder="Buscar por nombre, ubicación o descripción..." value={query} onChange={e=>setQuery(e.target.value)} style={{paddingLeft:56}} />
+                {query && (
+                  <button onClick={()=>setQuery('')} style={{position:'absolute',right:20,top:'50%',transform:'translateY(-50%)',background:'none',border:'none',color:'#999',cursor:'pointer',fontSize:'1.2rem'}}>
+                    <i className="fas fa-times-circle"></i>
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -41,7 +45,12 @@ export default function Eventos(){
       </div>
 
       <div className="container mt-5">
-        <h4 className="mb-4">Nuestros eventos</h4>
+        <div className="d-flex align-items-center justify-content-between mb-4">
+          <div>
+            <h4 className="mb-1 fw-bold"><i className="fas fa-calendar-alt me-2" style={{color:'var(--primary)'}}></i>Nuestros eventos</h4>
+            <p className="text-muted mb-0 small">{filtered.length} evento{filtered.length !== 1 ? 's' : ''} disponible{filtered.length !== 1 ? 's' : ''}</p>
+          </div>
+        </div>
 
         <div className="row events-grid">
           {filtered.map(ev => {
