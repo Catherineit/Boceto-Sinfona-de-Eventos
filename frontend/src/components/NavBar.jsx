@@ -17,8 +17,8 @@ export default function NavBar(){
     <nav className="navbar navbar-expand-lg navbar-light sticky-top" style={{background:'linear-gradient(135deg, #ffffff 0%, #f8fbff 100%)',boxShadow:'0 2px 15px rgba(30,111,191,0.08)',backdropFilter:'blur(10px)'}}>
       <div className="container">
         <Link className="navbar-brand d-flex align-items-center" to="/" style={{gap:10}}>
-          <div style={{width:40,height:40,background:'linear-gradient(135deg, var(--primary), #2e8fd6)',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',color:'white',fontSize:'1.2rem',boxShadow:'0 4px 12px rgba(30,111,191,0.3)'}}>
-            <i className="fas fa-calendar-star"></i>
+          <div style={{width:50,height:50,borderRadius:'50%',overflow:'hidden',flexShrink:0,boxShadow:'0 4px 12px rgba(30,111,191,0.3)'}}>
+            <img src="/assets/images/Logo.JPG" alt="Sinfonía de Eventos" style={{width:'100%',height:'100%',objectFit:'cover'}} />
           </div>
           <span style={{fontSize:'1.3rem',fontWeight:'700',background:'linear-gradient(135deg, var(--primary), #2e8fd6)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent'}}>Sinfonía de Eventos</span>
         </Link>

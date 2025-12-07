@@ -7,8 +7,8 @@ export default function Footer(){
         <div className="row g-4">
           <div className="col-md-4">
             <div className="d-flex align-items-center mb-3">
-              <div style={{width:48,height:48,borderRadius:'50%',background:'linear-gradient(135deg, #fff 0%, #e3f2fd 100%)',display:'flex',alignItems:'center',justifyContent:'center',marginRight:12}}>
-                <i className="fas fa-calendar-star" style={{fontSize:'1.4rem',color:'#1a365d'}}></i>
+              <div style={{width:56,height:56,borderRadius:'50%',overflow:'hidden',flexShrink:0,marginRight:12,boxShadow:'0 4px 12px rgba(0,0,0,0.3)'}}>
+                <img src="/assets/images/Logo.JPG" alt="Sinfonía de Eventos" style={{width:'100%',height:'100%',objectFit:'cover'}} />
               </div>
               <h5 className="mb-0 fw-bold">Sinfonía de Eventos</h5>
             </div>
