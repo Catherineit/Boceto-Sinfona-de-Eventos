@@ -5,7 +5,7 @@ export default function Footer(){
     <footer className="site-footer bg-light mt-5 py-4">
       <div className="container d-flex flex-column flex-md-row justify-content-between align-items-center">
         <div className="footer-brand text-muted" style={{fontSize:'.95rem'}}>
-          © 2025 Sinfonía de Evento - Todos los derechos reservados
+          © 2025 Sinfonía de Eventos - Todos los derechos reservados
         </div>
         <div className="footer-contact text-center text-md-start" style={{marginTop:8}}>
           <div><a href="mailto:Sinfonia@Contacto.com">Sinfonia@Contacto.com</a></div>

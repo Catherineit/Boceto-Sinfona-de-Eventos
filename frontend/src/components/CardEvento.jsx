@@ -35,14 +35,18 @@ export default function CardEvento({ evento }){
       </div>
       <div className="card-body d-flex flex-column">
         <h5 className="card-title">{localEvento.titulo}</h5>
-        <p className="card-text text-muted small">{localEvento.descripcion ? localEvento.descripcion.slice(0,80) : ''}</p>
-        <p className="mt-auto mb-1 small text-muted">{new Date(localEvento.fecha).toLocaleDateString()} · {localEvento.ubicacion || ''}</p>
-        <div className="d-flex justify-content-between align-items-center">
-          <span className={`badge ${badgeClass}`}>{disponibles === 0 ? 'Agotado' : `${disponibles} disponibles`}</span>
-          <div>
-            <Link to={`/eventos/${localEvento.id_evento}`} className="btn btn-link btn-sm me-2">Ver más</Link>
-            <button className="btn btn-primary btn-sm" disabled={disponibles===0} onClick={()=>setShowReserva(true)}>Reservar</button>
-          </div>
+        <div className="event-meta mb-2" style={{fontSize:'0.9rem',color:'var(--muted)'}}>{new Date(localEvento.fecha).toLocaleDateString(undefined, { day:'numeric', month:'long', year:'numeric' })}</div>
+        <div className="event-meta" style={{display:'flex',alignItems:'center',gap:8,fontSize:'0.9rem',color:'var(--muted)'}}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16" style={{color:'var(--muted)'}}>
+            <path d="M8 0a5 5 0 0 0-5 5c0 3.75 5 11 5 11s5-7.25 5-11a5 5 0 0 0-5-5zm0 7.5A2.5 2.5 0 1 1 8 2.5a2.5 2.5 0 0 1 0 5z"/>
+          </svg>
+          <span>{localEvento.ubicacion}</span>
+        </div>
+        <p className="card-text text-muted small mt-3">{localEvento.descripcion ? localEvento.descripcion.slice(0,100) : ''}</p>
+        <div className="mt-auto mb-3 event-meta" style={{fontSize:'0.9rem',color:'var(--muted)'}}>Capacidad: {localEvento.capacidad} personas</div>
+        <div className="event-footer d-flex justify-content-start gap-2">
+          <Link to={`/eventos/${localEvento.id_evento}`} className="btn btn-primary btn-sm" style={{borderRadius:'999px',padding:'0.45rem 0.9rem'}}>Ver más</Link>
+          <button className="btn btn-primary btn-sm" disabled={disponibles===0} onClick={()=>setShowReserva(true)} style={{borderRadius:'999px',padding:'0.45rem 0.9rem'}}>Reservar</button>
         </div>
       </div>
       <ModalReserva evento={localEvento} show={showReserva} onClose={()=>setShowReserva(false)} onConfirm={handleConfirm} />

@@ -5,11 +5,11 @@ export default function Servicios(){
   const [query, setQuery] = useState('')
 
   const services = [
-    { id: 's-garzones', title: 'Servicio de Garzones', desc: 'Personal de servicio para tu evento', price: 'Consultar precio', icon: '/assets/icons/waiter.svg' },
-    { id: 's-juegos', title: 'Juegos infantiles', desc: 'Diversión para los más pequeños', price: '$80.000', icon: '/assets/icons/duck.svg' },
-    { id: 's-deco', title: 'Decoración temática', desc: 'Decora tu evento según tu estilo', price: 'Consultar precio', icon: '/assets/icons/decor.svg' },
-    { id: 's-animador', title: 'Animador', desc: 'Animación para tu evento', price: '$120.000', icon: '/assets/icons/host.svg' },
-    { id: 's-karaoke', title: 'Karaoke', desc: 'Canta tus canciones favoritas', price: '$60.000', icon: '/assets/icons/mic.svg' }
+    { id: 's-garzones', title: 'Servicio de Garzones', desc: 'Personal de servicio para tu evento', price: 'Consultar precio', icon: '/assets/images/Garzon.jpg' },
+    { id: 's-juegos', title: 'Juegos infantiles', desc: 'Diversión para los más pequeños', price: '$80.000', icon: '/assets/images/Inflables.jpg' },
+    { id: 's-deco', title: 'Decoración temática', desc: 'Decora tu evento según tu estilo', price: 'Consultar precio', icon: '/assets/images/DecoracionTematica.jpg' },
+    { id: 's-animador', title: 'Animador', desc: 'Animación para tu evento', price: '$120.000', icon: '/assets/images/Animador.jpg' },
+    { id: 's-karaoke', title: 'Karaoke', desc: 'Canta tus canciones favoritas', price: '$60.000', icon: '/assets/images/Karaoke.jpg' }
   ]
 
   const filtered = useMemo(() => {
@@ -47,11 +47,11 @@ export default function Servicios(){
           {filtered.map(s => (
             <div key={s.id} className="col-sm-6 col-md-4 mb-4 d-flex">
               <div className="card service-card w-100 text-center">
-                <div style={{paddingTop:22}}>
+                <div style={{paddingTop:0,overflow:'hidden',height:180,borderTopLeftRadius:12,borderTopRightRadius:12}}>
                   {s.icon ? (
-                    <img src={s.icon} alt={s.title} style={{width:72,height:72,objectFit:'contain'}} />
+                    <img src={s.icon} alt={s.title} style={{width:'100%',height:'100%',objectFit:'cover'}} />
                   ) : (
-                    <div style={{width:72,height:72,background:'#eef6ff',borderRadius:12,margin:'0 auto'}} />
+                    <div style={{width:'100%',height:'100%',background:'#eef6ff',borderRadius:12,margin:'0 auto'}} />
                   )}
                 </div>
                 <div className="card-body d-flex flex-column align-items-center">

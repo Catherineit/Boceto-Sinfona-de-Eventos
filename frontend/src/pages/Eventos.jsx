@@ -45,7 +45,7 @@ export default function Eventos(){
 
         <div className="row events-grid">
           {filtered.map(ev => {
-            const disponibles = ev.capacidad // asumo cupos totales; si quieres aforo actual, indícalo
+            const disponibles = Math.max(0, ev.capacidad - (ev.aforo_actual || 0))
             return (
               <div key={ev.id_evento} className="col-sm-6 col-md-4 mb-4 d-flex">
                 <div className="card event-card w-100">

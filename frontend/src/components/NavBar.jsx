@@ -17,8 +17,7 @@ export default function NavBar(){
     <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
       <div className="container">
         <Link className="navbar-brand d-flex align-items-center" to="/">
-          <img src="/assets/logo.png" alt="Logo" style={{height:32,marginRight:8}} />
-          <span>Boceto</span>
+          <span style={{fontSize:'1.5rem',fontWeight:'700'}}>🎉 Sinfonía de Eventos</span>
         </Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>

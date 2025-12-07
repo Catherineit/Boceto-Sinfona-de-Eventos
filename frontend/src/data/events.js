@@ -4,36 +4,40 @@ const eventos = [
     titulo: 'Fiesta de Graduación',
     fecha: '2025-11-30',
     capacidad: 120,
+    aforo_actual: 45,
     ubicacion: 'Gran Salón Universidad',
     descripcion: 'Celebración especial para estudiantes que finalizan su etapa académica. Incluye música en vivo, animación, entrega de diplomas simbólicos y una cena tipo cóctel para compartir con compañeros, profesores y familiares.',
-    imagenUrl: '/assets/placeholder.png'
+    imagenUrl: '/assets/images/Graduacion.jpg'
   },
   {
     id_evento: 'e2',
     titulo: 'Fiesta de 15 Años',
     fecha: '2025-08-15',
     capacidad: 80,
+    aforo_actual: 62,
     ubicacion: 'Salón de Eventos La Rosa',
     descripcion: 'Evento elegante y juvenil que marca una ocasión especial en la vida de la quinceañera. Se realiza una recepción, vals tradicional, show de animación y sesión fotográfica, acompañado de decoración temática y buffet.',
-    imagenUrl: '/assets/placeholder.png'
+    imagenUrl: '/assets/images/15añera.jpg'
   },
   {
     id_evento: 'e3',
     titulo: 'Fiesta de Empresa',
     fecha: '2025-12-10',
     capacidad: 200,
+    aforo_actual: 112,
     ubicacion: 'Centro de Convenciones',
     descripcion: 'Actividad corporativa destinada a fortalecer el trabajo en equipo y celebrar los logros anuales. Incluye presentación audiovisual, cena formal, música ambiental y dinámicas grupales para los colaboradores.',
-    imagenUrl: '/assets/placeholder.png'
+    imagenUrl: '/assets/images/FiestaEmpresa.jpg'
   },
   {
     id_evento: 'e4',
     titulo: 'Boda',
-    fecha: '2025-03-22',
+    fecha: '2026-03-22',
     capacidad: 150,
+    aforo_actual: 0,
     ubicacion: 'Jardín Las Camelias',
     descripcion: 'Ceremonia y celebración matrimonial con una ambientación romántica. Incluye decoración floral, servicio de banquetería, pista de baile y momentos especiales como el primer baile y lanzamiento del ramo.',
-    imagenUrl: '/assets/placeholder.png'
+    imagenUrl: '/assets/images/Boda.jpg'
   }
 ]
 
