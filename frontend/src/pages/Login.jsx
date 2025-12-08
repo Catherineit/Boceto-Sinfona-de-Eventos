@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import api from '../api'
 
@@ -54,7 +55,7 @@ export default function Login(){
           </form>
         </div>
         <div className="text-center mt-3">
-          <p className="small text-muted mb-0">¿No tienes cuenta? <a href="#" className="text-decoration-none fw-semibold" style={{color:'var(--primary)'}}>Regístrate aquí</a></p>
+          <p className="small text-muted mb-0">¿No tienes cuenta? <Link to="/registro" className="text-decoration-none fw-semibold" style={{color:'var(--primary)'}}>Regístrate aquí</Link></p>
         </div>
       </div>
     </div>

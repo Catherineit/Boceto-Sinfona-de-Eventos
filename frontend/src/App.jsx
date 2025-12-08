@@ -10,6 +10,7 @@ import EventoDetalle from './pages/EventoDetalle'
 import MisReservas from './pages/MisReservas'
 import AdminPanel from './pages/AdminPanel'
 import Contacto from './pages/Contacto'
+import Registro from './pages/Registro'
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/mis-reservas" element={<MisReservas />} />
           <Route path="/admin" element={<AdminPanel />} />
           <Route path="/contacto" element={<Contacto />} />
+          <Route path="/registro" element={<Registro />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
