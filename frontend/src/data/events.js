@@ -7,7 +7,8 @@ const eventos = [
     aforo_actual: 45,
     ubicacion: 'Gran Salón Universidad',
     descripcion: 'Celebración especial para estudiantes que finalizan su etapa académica. Incluye música en vivo, animación, entrega de diplomas simbólicos y una cena tipo cóctel para compartir con compañeros, profesores y familiares.',
-    imagenUrl: '/assets/images/Graduacion.jpg'
+    imagenUrl: '/assets/images/Graduacion.jpg',
+    precio: 950000
   },
   {
     id_evento: 'e2',
@@ -17,7 +18,8 @@ const eventos = [
     aforo_actual: 62,
     ubicacion: 'Salón de Eventos La Rosa',
     descripcion: 'Evento elegante y juvenil que marca una ocasión especial en la vida de la quinceañera. Se realiza una recepción, vals tradicional, show de animación y sesión fotográfica, acompañado de decoración temática y buffet.',
-    imagenUrl: '/assets/images/15añera.jpg'
+    imagenUrl: '/assets/images/15añera.jpg',
+    precio: 750000
   },
   {
     id_evento: 'e3',
@@ -27,7 +29,8 @@ const eventos = [
     aforo_actual: 112,
     ubicacion: 'Centro de Convenciones',
     descripcion: 'Actividad corporativa destinada a fortalecer el trabajo en equipo y celebrar los logros anuales. Incluye presentación audiovisual, cena formal, música ambiental y dinámicas grupales para los colaboradores.',
-    imagenUrl: '/assets/images/FiestaEmpresa.jpg'
+    imagenUrl: '/assets/images/FiestaEmpresa.jpg',
+    precio: 1200000
   },
   {
     id_evento: 'e4',
@@ -37,7 +40,8 @@ const eventos = [
     aforo_actual: 0,
     ubicacion: 'Jardín Las Camelias',
     descripcion: 'Ceremonia y celebración matrimonial con una ambientación romántica. Incluye decoración floral, servicio de banquetería, pista de baile y momentos especiales como el primer baile y lanzamiento del ramo.',
-    imagenUrl: '/assets/images/Boda.jpg'
+    imagenUrl: '/assets/images/Boda.jpg',
+    precio: 1000000
   }
 ]
 

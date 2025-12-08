@@ -63,7 +63,6 @@ export default function Eventos(){
                   </div>
                   <div className="card-body d-flex flex-column">
                     <h5 className="card-title">{ev.titulo}</h5>
-                    <div className="event-meta mb-2">{new Date(ev.fecha).toLocaleDateString(undefined, { day:'numeric', month:'long', year:'numeric' })}</div>
                     <div className="event-meta" style={{display:'flex',alignItems:'center',gap:8}}>
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16" style={{color:'var(--muted)'}}>
                         <path d="M8 0a5 5 0 0 0-5 5c0 3.75 5 11 5 11s5-7.25 5-11a5 5 0 0 0-5-5zm0 7.5A2.5 2.5 0 1 1 8 2.5a2.5 2.5 0 0 1 0 5z"/>

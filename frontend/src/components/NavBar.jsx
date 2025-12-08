@@ -31,6 +31,7 @@ export default function NavBar(){
             <li className="nav-item"><Link className="nav-link px-3" to="/eventos" style={{borderRadius:8,transition:'all 0.3s'}}><i className="fas fa-calendar-alt me-2"></i>Eventos</Link></li>
             <li className="nav-item"><Link className="nav-link px-3" to="/servicios" style={{borderRadius:8,transition:'all 0.3s'}}><i className="fas fa-concierge-bell me-2"></i>Servicios</Link></li>
             <li className="nav-item"><Link className="nav-link px-3" to="/contacto" style={{borderRadius:8,transition:'all 0.3s'}}><i className="fas fa-envelope me-2"></i>Contacto</Link></li>
+            {token && <li className="nav-item"><Link className="nav-link px-3" to="/carrito" style={{borderRadius:8,transition:'all 0.3s'}}><i className="fas fa-shopping-cart me-2"></i>Carrito</Link></li>}
             {token && <li className="nav-item"><Link className="nav-link px-3" to="/mis-reservas" style={{borderRadius:8,transition:'all 0.3s'}}><i className="fas fa-ticket-alt me-2"></i>Mis Reservas</Link></li>}
             {isAdmin && <li className="nav-item"><Link className="nav-link px-3" to="/admin" style={{borderRadius:8,transition:'all 0.3s'}}><i className="fas fa-user-shield me-2"></i>Admin</Link></li>}
           </ul>

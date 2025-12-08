@@ -1,8 +1,12 @@
 import React, { useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import api from '../api'
+import { showToast } from '../utils/toast'
 
 export default function Servicios(){
   const [query, setQuery] = useState('')
+  const navigate = useNavigate()
+  const isAuth = Boolean(localStorage.getItem('token'))
 
   const services = [
     { id: 's-garzones', title: 'Servicio de Garzones', desc: 'Personal de servicio para tu evento', price: 'Consultar precio', icon: '/assets/images/Garzon.jpg' },
@@ -17,6 +21,32 @@ export default function Servicios(){
     if (!q) return services
     return services.filter(s => s.title.toLowerCase().includes(q) || s.desc.toLowerCase().includes(q))
   }, [query])
+
+  const handleAdd = async (service) => {
+    if (service.price === 'Consultar precio' || service.price === 'Consultar') {
+      navigate('/contacto')
+      return
+    }
+
+    if (!isAuth) {
+      showToast('Inicia sesión para agregar servicios al carrito', { type: 'warning' })
+      navigate('/login')
+      return
+    }
+    try {
+      await api.post('/carrito', { 
+        serviceId: service.id, 
+        serviceName: service.title, 
+        precio: service.price,
+        cantidad: 1 
+      })
+      showToast('Servicio agregado al carrito', { type: 'success' })
+      navigate('/carrito')
+    } catch (err) {
+      const msg = err?.response?.data?.message || 'No se pudo agregar al carrito'
+      showToast(msg, { type: 'danger' })
+    }
+  }
 
   return (
     <div>
@@ -75,7 +105,25 @@ export default function Servicios(){
                     <span style={{color:'var(--primary)',fontWeight:'700',fontSize:'1.05rem'}}>{s.price}</span>
                   </div>
                   <div className="mt-auto w-100">
-                    <button className="btn btn-primary w-100" style={{borderRadius:999,padding:'12px 0',fontWeight:'600',boxShadow:'0 4px 12px rgba(30,111,191,0.3)',transition:'all 0.3s ease'}}><i className="fas fa-plus-circle me-2"></i>Agregar al evento</button>
+                    {s.price === 'Consultar precio' ? (
+                      <button
+                        className="btn w-100 btn-outline-primary"
+                        style={{borderRadius:999,padding:'12px 0',fontWeight:'600',transition:'all 0.3s ease'}}
+                        onClick={()=>handleAdd(s)}
+                      >
+                        <i className="fas fa-phone me-2"></i>Consultar precio
+                      </button>
+                    ) : (
+                      <button
+                        className={`btn w-100 ${isAuth ? 'btn-primary' : 'btn-outline-secondary'}`}
+                        style={{borderRadius:999,padding:'12px 0',fontWeight:'600',boxShadow: isAuth ? '0 4px 12px rgba(30,111,191,0.3)' : 'none',transition:'all 0.3s ease'}}
+                        onClick={()=>handleAdd(s)}
+                        aria-disabled={!isAuth}
+                      >
+                        <i className="fas fa-plus-circle me-2"></i>
+                        {isAuth ? 'Agregar al carrito' : 'Inicia sesión para agregar'}
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>

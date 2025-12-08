@@ -42,12 +42,6 @@ export default function CardEvento({ evento }){
         <div className="d-flex flex-column gap-2 mb-3">
           <div style={{display:'flex',alignItems:'center',gap:10}}>
             <div style={{width:32,height:32,background:'rgba(30,111,191,0.1)',borderRadius:8,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
-              <i className="fas fa-calendar-alt" style={{color:'var(--primary)',fontSize:'0.9rem'}}></i>
-            </div>
-            <span style={{fontSize:'0.9rem',color:'#555'}}>{new Date(localEvento.fecha).toLocaleDateString(undefined, { day:'numeric', month:'long', year:'numeric' })}</span>
-          </div>
-          <div style={{display:'flex',alignItems:'center',gap:10}}>
-            <div style={{width:32,height:32,background:'rgba(30,111,191,0.1)',borderRadius:8,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
               <i className="fas fa-map-marker-alt" style={{color:'var(--primary)',fontSize:'0.9rem'}}></i>
             </div>
             <span style={{fontSize:'0.9rem',color:'#555'}}>{localEvento.ubicacion}</span>

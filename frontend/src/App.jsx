@@ -11,6 +11,7 @@ import MisReservas from './pages/MisReservas'
 import AdminPanel from './pages/AdminPanel'
 import Contacto from './pages/Contacto'
 import Registro from './pages/Registro'
+import Carrito from './pages/Carrito'
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/admin" element={<AdminPanel />} />
           <Route path="/contacto" element={<Contacto />} />
           <Route path="/registro" element={<Registro />} />
+          <Route path="/carrito" element={<Carrito />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>

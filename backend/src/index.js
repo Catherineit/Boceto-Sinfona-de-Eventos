@@ -6,6 +6,7 @@ require('dotenv').config();
 const authRoutes = require('./routes/auth');
 const eventosRoutes = require('./routes/eventos');
 const reservasRoutes = require('./routes/reservas');
+const carritoRoutes = require('./routes/carrito');
 
 app.use(cors());
 app.use(express.json());
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/eventos', eventosRoutes);
 app.use('/api/reservas', reservasRoutes);
+app.use('/api/carrito', carritoRoutes);
 
 // Error handler mínimo
 app.use((err, req, res, next) => {

@@ -106,4 +106,52 @@ router.delete('/:id', authenticateToken, async (req, res) => {
   }
 });
 
+// Crear reserva de servicios del carrito
+router.post('/servicios', authenticateToken, async (req, res) => {
+  const userId = req.user.id_usuario;
+  const { items } = req.body; // Array de {service_id, service_name, precio, cantidad}
+
+  if (!items || !Array.isArray(items) || items.length === 0) {
+    return res.status(400).json({ message: 'items es requerido y debe ser un array no vacío' });
+  }
+
+  const conn = await pool.getConnection();
+  try {
+    await conn.beginTransaction();
+
+    // Crear tabla reserva_servicios si no existe
+    await conn.query(`
+      CREATE TABLE IF NOT EXISTS reserva_servicios (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        id_usuario INT NOT NULL,
+        service_id VARCHAR(100),
+        service_name VARCHAR(255),
+        precio DECIMAL(10, 2),
+        cantidad INT DEFAULT 1,
+        fecha_reserva TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        estado VARCHAR(50) DEFAULT 'pendiente',
+        FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
+      )
+    `);
+
+    // Insertar cada item de la reserva de servicios
+    for (const item of items) {
+      const { service_id, service_name, precio, cantidad } = item;
+      await conn.query(
+        'INSERT INTO reserva_servicios (id_usuario, service_id, service_name, precio, cantidad) VALUES (?, ?, ?, ?, ?)',
+        [userId, service_id, service_name, precio, cantidad]
+      );
+    }
+
+    await conn.commit();
+    res.status(201).json({ message: 'Reserva de servicios creada exitosamente' });
+  } catch (err) {
+    await conn.rollback();
+    console.error(err);
+    res.status(500).json({ message: 'Error del servidor' });
+  } finally {
+    conn.release();
+  }
+});
+
 module.exports = router;

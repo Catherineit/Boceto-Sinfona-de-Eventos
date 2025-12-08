@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import api from '../api'
 import ModalReserva from '../components/ModalReserva'
+import { showToast } from '../utils/toast'
 import eventosData from '../data/events'
 
 export default function EventoDetalle(){
   const { id } = useParams()
+  const navigate = useNavigate()
   const [evento, setEvento] = useState(null)
   const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState(null)
   const [showReserva, setShowReserva] = useState(false)
+  const isAuth = Boolean(localStorage.getItem('token'))
 
   useEffect(() => {
     (async () => {
@@ -43,6 +46,10 @@ export default function EventoDetalle(){
     }
   }
 
+  const agregarAlCarrito = async () => {
+    navigate('/contacto')
+  }
+
   if (loading) return <div className="container py-5 text-center">Cargando...</div>
   if (!evento) return <div className="container py-5 text-center">Evento no encontrado</div>
 
@@ -57,13 +64,30 @@ export default function EventoDetalle(){
         <div className="col-lg-6">
           <h2 className="fw-bold mb-3">{evento.titulo}</h2>
           <p className="text-muted" style={{lineHeight:1.7}}>{evento.descripcion}</p>
-          <div className="d-flex flex-column gap-2 my-3">
-            <div><i className="fas fa-calendar-alt me-2 text-primary"></i>{new Date(evento.fecha).toLocaleDateString(undefined, { day:'numeric', month:'long', year:'numeric', hour:'2-digit', minute:'2-digit' })}</div>
-            <div><i className="fas fa-map-marker-alt me-2 text-primary"></i>{evento.ubicacion}</div>
-            <div><i className="fas fa-users me-2 text-primary"></i>Aforo: {evento.aforo_actual || 0} / {evento.capacidad}</div>
+          
+          <div className="d-flex align-items-center gap-3 mb-4" style={{background:'rgba(30,111,191,0.1)',padding:'16px',borderRadius:12}}>
+            <i className="fas fa-tag text-primary" style={{fontSize:'1.3rem'}}></i>
+            <div>
+              <small className="text-muted d-block">Precio del evento</small>
+              <h4 className="mb-0 fw-bold text-primary">${(evento.precio || 950000).toLocaleString()}</h4>
+            </div>
           </div>
+
+          <div className="d-flex flex-column gap-2 my-3">
+            <div><i className="fas fa-map-marker-alt me-2 text-primary"></i>{evento.ubicacion}</div>
+            <div><i className="fas fa-users me-2 text-primary"></i>Aforo disponible: {Math.max(0, (evento.capacidad || 0) - (evento.aforo_actual || 0))} / {evento.capacidad} personas</div>
+          </div>
+
+          <div className="alert alert-info small" style={{borderRadius:12,border:'none',background:'rgba(30,111,191,0.1)',color:'#1a1a1a'}}>
+            <i className="fas fa-info-circle me-2" style={{color:'var(--primary)'}}></i>
+            <strong>Nota:</strong> La cantidad de invitados no afecta el precio total del evento. El precio mostrado es fijo.
+          </div>
+
           {message && <div className={`alert alert-${message.type}`}>{message.text}</div>}
-          <button className="btn btn-primary" onClick={()=>setShowReserva(true)}><i className="fas fa-ticket-alt me-2"></i>Reservar</button>
+          <div className="d-flex gap-2">
+            <button className="btn btn-primary flex-grow-1" onClick={()=>setShowReserva(true)}><i className="fas fa-ticket-alt me-2"></i>Reservar ahora</button>
+            <button className="btn btn-outline-primary flex-grow-1" onClick={agregarAlCarrito}><i className="fas fa-phone me-2"></i>Contáctanos</button>
+          </div>
         </div>
       </div>
 
