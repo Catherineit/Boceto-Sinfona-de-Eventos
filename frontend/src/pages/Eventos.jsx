@@ -54,7 +54,7 @@ export default function Eventos(){
 
         <div className="row events-grid">
           {filtered.map(ev => {
-            const disponibles = Math.max(0, ev.capacidad - (ev.aforo_actual || 0))
+            const disponibles = ev.capacidad
             return (
               <div key={ev.id_evento} className="col-sm-6 col-md-4 mb-4 d-flex">
                 <div className="card event-card w-100">
@@ -72,9 +72,7 @@ export default function Eventos(){
 
                     <p className="mt-3" style={{color:'var(--muted)'}}>{ev.descripcion}</p>
 
-                    <div className="mt-auto mb-3 event-meta">Capacidad: {disponibles} personas</div>
-
-                    <div className="event-footer">
+                    <div className="mt-auto mb-3">
                       <Link to={`/eventos/${ev.id_evento}`} className="btn btn-primary">Ver más</Link>
                     </div>
                   </div>

@@ -12,6 +12,10 @@ export default function Login(){
   const submit = async (e) => {
     e.preventDefault()
     setError(null)
+    if (!correo || !password) {
+      setError('Por favor completa todos los campos')
+      return
+    }
     try {
       const res = await api.post('/auth/login', { correo, password })
       localStorage.setItem('token', res.data.token)

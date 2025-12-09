@@ -4,27 +4,6 @@ const router = express.Router();
 const pool = require('../db');
 const { authenticateToken } = require('../middleware/auth');
 
-// Ensure table exists (lightweight safeguard)
-(async () => {
-  try {
-    await pool.query(`
-      CREATE TABLE IF NOT EXISTS carrito_servicios (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        id_usuario INT NOT NULL,
-        service_id VARCHAR(120) NOT NULL,
-        service_name VARCHAR(255),
-        precio VARCHAR(100),
-        cantidad INT NOT NULL DEFAULT 1 CHECK (cantidad > 0),
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        UNIQUE KEY uk_usuario_servicio (id_usuario, service_id),
-        CONSTRAINT fk_carrito_usuario FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-    `);
-  } catch (err) {
-    console.error('Error creando tabla carrito_servicios', err);
-  }
-})();
-
 // GET /api/carrito - Obtener carrito del usuario
 router.get('/', authenticateToken, async (req, res) => {
   const idUsuario = req.user?.id_usuario;
@@ -123,27 +102,6 @@ router.delete('/:itemId', authenticateToken, async (req, res) => {
   }
 });
 
-// Crear tabla para eventos en carrito si no existe
-(async () => {
-  try {
-    await pool.query(`
-      CREATE TABLE IF NOT EXISTS carrito_eventos (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        id_usuario INT NOT NULL,
-        id_evento INT NOT NULL,
-        titulo_evento VARCHAR(255),
-        cantidad INT NOT NULL DEFAULT 1 CHECK (cantidad > 0),
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        UNIQUE KEY uk_usuario_evento (id_usuario, id_evento),
-        CONSTRAINT fk_carrito_evt_usuario FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE,
-        CONSTRAINT fk_carrito_evt_evento FOREIGN KEY (id_evento) REFERENCES eventos(id_evento) ON DELETE CASCADE
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-    `);
-  } catch (err) {
-    console.error('Error creando tabla carrito_eventos', err);
-  }
-})();
-
 // GET /api/carrito/eventos - Obtener eventos en carrito
 router.get('/eventos', authenticateToken, async (req, res) => {
   const idUsuario = req.user?.id_usuario;
@@ -152,7 +110,7 @@ router.get('/eventos', authenticateToken, async (req, res) => {
   try {
     const [items] = await pool.query(
       `SELECT ce.id, ce.id_evento, ce.titulo_evento, ce.cantidad, ce.created_at,
-              e.capacidad, e.aforo_actual
+              e.capacidad
        FROM carrito_eventos ce
        LEFT JOIN eventos e ON ce.id_evento = e.id_evento
        WHERE ce.id_usuario = ? 

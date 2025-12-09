@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 export default function ModalReserva({ evento, show=false, onClose=()=>{}, onConfirm=()=>{} }){
-  const disponibles = Math.max(0, evento?.capacidad - (evento?.aforo_actual || 0))
+  const disponibles = evento?.capacidad
   const [cantidad, setCantidad] = useState(1)
   const [fechaReserva, setFechaReserva] = useState(new Date().toISOString().split('T')[0])
   const [submitting, setSubmitting] = useState(false)
@@ -120,8 +120,7 @@ export default function ModalReserva({ evento, show=false, onClose=()=>{}, onCon
           <div className="modal-body" style={{padding:'24px'}}>
             <div className="mb-4">
               <small className="text-muted d-block mb-1">Detalles del evento</small>
-              <p className="mb-2"><i className="fas fa-map-marker-alt text-primary me-2"></i><strong>Ubicación:</strong> {evento.ubicacion || 'Por definir'}</p>
-              <p className="mb-0"><i className="fas fa-users text-primary me-2"></i><strong>Aforo disponible:</strong> {disponibles} de {evento.capacidad} personas</p>
+              <p className="mb-0"><i className="fas fa-map-marker-alt text-primary me-2"></i><strong>Ubicación:</strong> {evento.ubicacion || 'Por definir'}</p>
             </div>
 
             <div className="mb-4">
@@ -231,7 +230,6 @@ export default function ModalReserva({ evento, show=false, onClose=()=>{}, onCon
                   <i className="fas fa-plus"></i>
                 </button>
               </div>
-              <small className="text-muted d-block mt-2">Máximo disponible: {disponibles} personas</small>
             </div>
 
             <div className="card" style={{border:'1px solid #f0f0f0',borderRadius:12,background:'rgba(30,111,191,0.05)',padding:'16px'}}>

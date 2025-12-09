@@ -7,7 +7,7 @@ const { authenticateToken, requireRole } = require('../middleware/auth');
 // Listar eventos con filtros simples
 router.get('/', async (req, res) => {
   try {
-    const [rows] = await pool.query('SELECT id_evento, titulo, descripcion, fecha, capacidad, aforo_actual, estado FROM eventos WHERE estado = "publicado" ORDER BY fecha ASC');
+    const [rows] = await pool.query('SELECT id_evento, titulo, descripcion, fecha, capacidad, estado FROM eventos WHERE estado = "publicado" ORDER BY fecha ASC');
     res.json({ eventos: rows });
   } catch (err) {
     console.error(err);

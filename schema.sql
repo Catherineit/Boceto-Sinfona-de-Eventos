@@ -18,7 +18,6 @@ CREATE TABLE IF NOT EXISTS eventos (
   descripcion TEXT,
   fecha DATETIME NOT NULL,
   capacidad INT NOT NULL CHECK (capacidad >= 0),
-  aforo_actual INT NOT NULL DEFAULT 0,
   estado ENUM('borrador','publicado','cancelado') NOT NULL DEFAULT 'publicado',
   creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -36,9 +35,9 @@ CREATE TABLE IF NOT EXISTS reservas (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Índices
-CREATE INDEX IF NOT EXISTS idx_evento_fecha ON eventos(fecha);
-CREATE INDEX IF NOT EXISTS idx_reserva_usuario ON reservas(id_usuario);
-CREATE INDEX IF NOT EXISTS idx_reserva_evento ON reservas(id_evento);
+CREATE INDEX idx_evento_fecha ON eventos(fecha);
+CREATE INDEX idx_reserva_usuario ON reservas(id_usuario);
+CREATE INDEX idx_reserva_evento ON reservas(id_evento);
 
 -- Nota: Mantener la consistencia de `aforo_actual` desde la capa de aplicación
 -- para manejar correctamente concurrencia; alternativamente usar bloqueos o

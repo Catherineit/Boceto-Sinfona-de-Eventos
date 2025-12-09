@@ -47,7 +47,7 @@ export default function Carrito() {
 
   const handleConfirm = async () => {
     if (todosItems.length === 0) {
-      showToast('warning', 'Tu carrito está vacío')
+      showToast('Tu carrito está vacío', { type: 'warning' })
       return
     }
     try {
@@ -67,7 +67,7 @@ export default function Carrito() {
         await api.post('/reservas', { id_evento: evento.id_evento, cantidad: evento.cantidad })
       }
 
-      showToast('success', 'Reserva confirmada correctamente')
+      showToast('Reserva confirmada correctamente', { type: 'success' })
       
       // Limpiar carrito después de checkout
       for (const item of servicios) {
@@ -80,7 +80,7 @@ export default function Carrito() {
       setTimeout(() => navigate('/mis-reservas'), 1500)
     } catch (err) {
       const msg = err?.response?.data?.message || 'No se pudo confirmar la reserva'
-      showToast('danger', msg)
+      showToast(msg, { type: 'danger' })
     }
   }
 
@@ -182,7 +182,7 @@ export default function Carrito() {
                               style={{borderRadius:8,padding:'6px 12px'}}
                               onClick={() => {
                                 removeServicio(item.id)
-                                showToast('info', 'Servicio eliminado')
+                                showToast('Servicio eliminado', { type: 'info' })
                               }}
                             >
                               <i className="fas fa-trash-alt"></i>
@@ -238,7 +238,7 @@ export default function Carrito() {
                             style={{borderRadius:8,padding:'6px 12px'}}
                             onClick={() => {
                               removeEvento(item.id)
-                              showToast('info', 'Evento eliminado')
+                              showToast('Evento eliminado', { type: 'info' })
                             }}
                           >
                             <i className="fas fa-trash-alt"></i>

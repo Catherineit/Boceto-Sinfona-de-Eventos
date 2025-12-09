@@ -13,7 +13,6 @@ CREATE TABLE eventos (
   descripcion TEXT,
   fecha DATETIME NOT NULL,
   capacidad INT NOT NULL CHECK (capacidad >= 0),
-  aforo_actual INT NOT NULL DEFAULT 0,
   estado ENUM('borrador','publicado','cancelado') NOT NULL DEFAULT 'publicado',
   creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

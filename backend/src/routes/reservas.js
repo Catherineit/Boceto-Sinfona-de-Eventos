@@ -3,18 +3,18 @@ const router = express.Router();
 const pool = require('../db');
 const { authenticateToken } = require('../middleware/auth');
 
-// Crear reserva: transacción segura que verifica cupo y actualiza aforo_actual
+// Crear reserva: transacción segura que verifica cupo
 router.post('/', authenticateToken, async (req, res) => {
   const userId = req.user.id_usuario;
-  const { id_evento } = req.body;
+  const { id_evento, cantidad = 1, fechaReserva } = req.body;
   if (!id_evento) return res.status(400).json({ message: 'id_evento es requerido' });
 
   const conn = await pool.getConnection();
   try {
     await conn.beginTransaction();
 
-    // Verificar que exista el evento y que haya cupo
-    const [evRows] = await conn.query('SELECT capacidad, aforo_actual, estado FROM eventos WHERE id_evento = ? FOR UPDATE', [id_evento]);
+    // Verificar que exista el evento
+    const [evRows] = await conn.query('SELECT capacidad, estado FROM eventos WHERE id_evento = ? FOR UPDATE', [id_evento]);
     if (evRows.length === 0) {
       await conn.rollback();
       return res.status(404).json({ message: 'Evento no encontrado' });
@@ -26,9 +26,9 @@ router.post('/', authenticateToken, async (req, res) => {
       return res.status(400).json({ message: 'Evento no está disponible para reservas' });
     }
 
-    if (evento.aforo_actual >= evento.capacidad) {
+    if (cantidad > evento.capacidad) {
       await conn.rollback();
-      return res.status(400).json({ message: 'Cupo agotado' });
+      return res.status(400).json({ message: 'La cantidad solicitada excede la capacidad del evento' });
     }
 
     // Verificar que el usuario no tenga ya una reserva para el evento (unicidad)
@@ -38,14 +38,11 @@ router.post('/', authenticateToken, async (req, res) => {
       return res.status(409).json({ message: 'Ya existe una reserva para este usuario y evento' });
     }
 
-    // Insertar reserva
+    // Insertar reserva (fecha_reserva se establece automáticamente como TIMESTAMP actual)
     const [ins] = await conn.query('INSERT INTO reservas (id_usuario, id_evento) VALUES (?, ?)', [userId, id_evento]);
 
-    // Actualizar aforo_actual
-    await conn.query('UPDATE eventos SET aforo_actual = aforo_actual + 1 WHERE id_evento = ?', [id_evento]);
-
     await conn.commit();
-    res.status(201).json({ id_reserva: ins.insertId });
+    res.status(201).json({ id_reserva: ins.insertId, message: 'Reserva creada exitosamente' });
   } catch (err) {
     await conn.rollback();
     console.error(err);
