@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS reservas (
   id_reserva INT AUTO_INCREMENT PRIMARY KEY,
   id_usuario INT NOT NULL,
   id_evento INT NOT NULL,
+  cantidad INT NOT NULL DEFAULT 1,
   fecha_reserva TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   estado ENUM('activa','cancelada','asistida','no_asistida') NOT NULL DEFAULT 'activa',
   UNIQUE KEY uk_usuario_evento (id_usuario, id_evento),
