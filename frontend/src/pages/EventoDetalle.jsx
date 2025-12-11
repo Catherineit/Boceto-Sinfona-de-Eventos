@@ -21,7 +21,13 @@ export default function EventoDetalle(){
       try {
         const res = await api.get(`/eventos/${id}`)
         if (res?.data?.evento) {
-          setEvento(res.data.evento)
+          const incoming = res.data.evento
+          const merged = {
+            ...fallback,
+            ...incoming,
+            imagenUrl: incoming.imagenUrl || fallback?.imagenUrl || '/assets/placeholder.png'
+          }
+          setEvento(merged)
         } else {
           setEvento(fallback)
         }

@@ -52,6 +52,29 @@ router.post('/', authenticateToken, async (req, res) => {
   }
 });
 
+// Listar todas las reservas (solo admin)
+router.get('/admin/all', authenticateToken, async (req, res) => {
+  const userRole = req.user.rol;
+  if (userRole !== 'admin') {
+    return res.status(403).json({ message: 'Acceso denegado: se requiere rol admin' });
+  }
+  try {
+    const [rows] = await pool.query(`
+      SELECT r.id_reserva, r.id_evento, r.fecha_reserva, r.estado, 
+             e.titulo, e.fecha as fecha_evento,
+             u.id_usuario, u.nombre as nombre_usuario, u.correo
+      FROM reservas r 
+      JOIN eventos e ON r.id_evento = e.id_evento
+      JOIN usuarios u ON r.id_usuario = u.id_usuario
+      ORDER BY r.fecha_reserva DESC
+    `);
+    res.json({ reservas: rows });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error del servidor' });
+  }
+});
+
 // Listar reservas del usuario
 router.get('/', authenticateToken, async (req, res) => {
   const userId = req.user.id_usuario;
