@@ -1,4 +1,4 @@
-# Boseto — Especificación Técnica (documentación web)
+# Boseto (Sinfonía de Eventos)— Especificación Técnica (documentación web)
 
 # 📋 Especificación Técnica — Sistema de Reservas
 
